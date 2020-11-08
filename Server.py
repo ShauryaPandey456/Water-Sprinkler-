@@ -1,10 +1,10 @@
+import time
 import socket 
 import threading
 # our basic variables needed like our port number and sever number and msg bytes aka 64
 HEADER = 64
 PORT = 5050
-#server number is different for anyone for windows type in Ipconfig and for mac you have to go to network advanced settings. 
-SERVER = ""
+SERVER = "192.168.195.1"
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
@@ -14,7 +14,7 @@ server.bind(ADDR)
 
 def handle_client(conn, addr):
     print(f"[NEW CONNECTION] {addr} connected.")
-* 
+
     connected = True
     while connected:
         msg_length = conn.recv(HEADER).decode(FORMAT)
@@ -25,7 +25,7 @@ def handle_client(conn, addr):
                 connected = False
 
             print(f"[{addr}] {msg}")
-            conn.send("Msg received".encode(FORMAT))
+            conn.send("Connection was succesful".encode(FORMAT))
 # close connection 
     conn.close()
     
@@ -37,7 +37,11 @@ def start():
         thread = threading.Thread(target=handle_client, args=(conn, addr))
         thread.start()
         print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
-
+        import Simulation
+        time.sleep(2)
+        exit()
+        
 
 print("[STARTING] server is starting...")
 start()
+
